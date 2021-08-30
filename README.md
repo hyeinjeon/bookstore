@@ -15,7 +15,9 @@ cd bookproject
 pip install django
 
 pip install pillow
+
 pip install pilkit
+
 pip install django-imagekit
 
 python manage.py makemigrations
