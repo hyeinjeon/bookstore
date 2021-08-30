@@ -10,7 +10,7 @@ python -m venv myvenv
 
 source myvenv/Scripts/activate
 
-cd bookproject
+cd bookstore
 
 pip install django
 
