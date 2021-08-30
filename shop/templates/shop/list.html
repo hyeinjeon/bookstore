@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+
+<style>
+    .list_item {
+        text-align: center;
+        padding: 10px;
+    }
+    
+    #thumbnail {
+        width: 150px;
+        height: 200px;
+    }
+
+    button a {
+        text-decoration: none;
+        color: black;
+    }
+
+    #cart {
+        width: 30px;
+        height: 30px;
+    }
+
+    #cartlink {
+        text-decoration: none;
+        color: black;
+    }
+    </style>
+
+    <div class="list_item">
+    {% for product in products %}
+        {% if product.image %}
+            <img id="thumbnail" src="{{product.image.url}}" alt=""><br>
+        {% endif %}
+        책이름 : {{product.name}}<br>
+        가격 : {{product.price|floatformat}}원<br>
+        <button type="button" class="btn btn-outline-dark">
+            <a href="{{product.get_absolute_url}}">상세정보</a>
+        </button><hr><br>
+    {% endfor %}
+    </div>
+
+    <a id="cartlink" href='{% url "cart:detail" %}'>
+        <img id="cart" src="{% static 'cart.png'%}">장바구니로 이동
+    </a> 
+
+
+{% endblock %}
