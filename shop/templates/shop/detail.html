@@ -1,0 +1,42 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .detail_view {
+        padding: 10px;
+    }
+    
+    #thumbnail {
+        width: 300px;
+        height: 400px;
+        float: left;
+        margin-right: 5%;
+    }
+
+    #preview {
+        padding: 10px;
+        margin: 10px;
+    }
+    
+    </style>
+    
+    <div class="detail_view">
+        {% if product.image %}
+        <img id="thumbnail" src="{{product.image.url}}" alt=""><br>
+        {% endif %}
+    도서명 : {{product.name}}<br>
+    저자 : {{product.writer}}<br>
+    가격 : {{product.price|floatformat}}원<br>
+    <div id="preview">
+    {{product.preview}}
+    </div>
+    <form action="{% url 'cart:product_add' product.id %}" method="post">
+        {{add_to_cart}}
+        {% csrf_token %}
+        <br><br>
+        <input type="submit" value="장바구니에 담기">
+    </form>
+    </div>
+    
+{% endblock %}
