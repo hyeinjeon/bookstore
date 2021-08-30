@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .img {
+        padding: 10px;
+        margin: auto;
+        text-align: center;
+    }
+
+    img {
+        width: 300px;
+    }
+</style>
+
+<div class="">
+    <h1>{{ blog.title }}</h1>
+    <hr>
+    <div class="img">
+        {% if blog.images %}
+            <img src="{{ blog.images.url }}">
+        {% endif %}
+    </div>
+    <div class="">
+        <p>{{ blog.pub_date | date:"Y년 m월 d일" }}</p>
+        <p>{{ blog.body }}</p> 
+        <p>조회수 : {{ blog.hits }}</p>
+        <a href="{% url 'home' %}">돌아가기</a>
+        <br>
+        <a href="{% url 'edit' blog.id %}">수정하기</a>
+        <a href="{% url 'delete' blog.id %}">삭제하기</a>
+    </div>
+</div>
+{% endblock %}

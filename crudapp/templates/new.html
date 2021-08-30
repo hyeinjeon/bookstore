@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="mainbox">
+    <h2>새로운 글쓰기</h2>
+    <hr>
+    <form method="POST" enctype="multipart/form-data">
+        {%csrf_token%}
+        {{post_form.as_p}}
+        <button type="submit">submit</button>
+    </form>
+</div>
+
+{% endblock %}
