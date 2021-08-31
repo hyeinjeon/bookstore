@@ -28,12 +28,18 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+AUTH_USER_MODEL = 'user.CustomUser'
+LOGIN_REDIRECT_URL = "/"
+LOGIN_URL = '/user/login/'
+
+SITE_ID = 1
 
 # Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
+    'django.contrib.sites',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -41,9 +47,15 @@ INSTALLED_APPS = [
     'crudapp.apps.CrudappConfig',
     'shop.apps.ShopConfig',
     'cart.apps.CartConfig',
+    'user.apps.UserConfig',
 
     #imagekit
     'imagekit',
+    #allauth
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 ]
 
 MIDDLEWARE = [
@@ -61,7 +73,9 @@ ROOT_URLCONF = 'bookproject.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['bookproject/templates'],
+        'DIRS': [ 
+            os.path.join(BASE_DIR, 'bookproject/templates'), 
+            os.path.join(BASE_DIR, 'user/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -129,7 +143,8 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'crudapp', 'static'),
     os.path.join(BASE_DIR, 'shop', 'static'),
-    os.path.join(BASE_DIR, 'cart', 'static')
+    os.path.join(BASE_DIR, 'cart', 'static'),
+    os.path.join(BASE_DIR, 'user', 'static'),
 ]
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')

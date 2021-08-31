@@ -37,6 +37,7 @@ def new(request):
         if post_form.is_valid():
             post = post_form.save(commit = False)
             post.pub_date = timezone.now()
+            post.user = request.user
             post.save()
             return redirect('home')
     else:   #글을 쓰려고 들어갔을 때
@@ -55,6 +56,7 @@ def edit(request, id):
         if post_form.is_valid():
             post = post_form.save(commit=False)
             post.pub_date = timezone.now()
+            post.user = request.user
             post.save()
         return redirect('/crudapp/detail/'+str(id))
 
