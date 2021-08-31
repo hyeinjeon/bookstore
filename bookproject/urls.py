@@ -25,4 +25,6 @@ urlpatterns = [
     path('crudapp/', include('crudapp.urls')),
     path('shop/', include('shop.urls')),
     path('cart/', include('cart.urls')),
+    path('user/', include('user.urls')),
+    path('accounts/', include('allauth.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
