@@ -79,7 +79,7 @@
               </li>
               <li class="nav-item2">
                 <div class="account-link">
-                  <a class="profile-link" href="{% url 'user:profile' request.user.pk %}">{{user.username}} 님이 로그인 중</a>
+                  <a class="profile-link" href="{% url 'user:profile' user.pk %}">{{user.username}} 님이 로그인 중</a>
                 </div>
               </li>
               <li class="nav-item2">
