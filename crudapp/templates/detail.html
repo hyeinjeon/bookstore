@@ -27,8 +27,11 @@
         <p>조회수 : {{ blog.hits }}</p>
         <a href="{% url 'home' %}">돌아가기</a>
         <br>
+        {% if user == blog.writer %}
+        <!-- user와 작성자의 이름이 같을 경우 삭제할 수 있게 -->
         <a href="{% url 'edit' blog.id %}">수정하기</a>
         <a href="{% url 'delete' blog.id %}">삭제하기</a>
+        {% endif %}
     </div>
 </div>
 {% endblock %}

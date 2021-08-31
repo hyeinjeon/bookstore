@@ -21,12 +21,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-bx2$m7p%&mzj5@q*dp%y#$jqog-s(&0!dep*!*=r0!r9g$2(#*'
+# SECRET_KEY = 'django-insecure-bx2$m7p%&mzj5@q*dp%y#$jqog-s(&0!dep*!*=r0!r9g$2(#*'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-bx2$m7p%&mzj5@q*dp%y#$jqog-s(&0!dep*!*=r0!r9g$2(#*')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = (os.environ.get('DEBUG', 'True') != 'False')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 AUTH_USER_MODEL = 'user.CustomUser'
 LOGIN_REDIRECT_URL = "/"
@@ -61,6 +62,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -160,3 +162,16 @@ MEDIA_URL = '/media/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CART_ID = 'cart_item'
+
+# Heroku 배포
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRETE_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = 'likelion-django-bookstore'
+AWS_S3_SIGNATURE_VERSION = 's3v4'
+AWS_DEFAULT_REGION = 'ap-northeast-2'
+
+import dj_database_url
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
