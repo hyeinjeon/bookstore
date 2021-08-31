@@ -87,24 +87,26 @@
 </script>
 
 <div class="box">
-    {% with user_followers=user.followers.all %}
+    {% with user_followers=author.followers.all %}
         <ul class="list-group list-group-flush">
             <ul class="info-follow">
-                {% if request.user.username != user.username %}
-                {% if request.user in user_followers %}
-                    <a href="{% url 'user:follow' user.pk %}">팔로우 취소</a>
-                {% else %}
-                    <a href="{% url 'user:follow' user.pk %}">팔로우하기</a>
-                {% endif %}
+                {% if request.user %}
+                    {% if request.user != author %}
+                        {% if request.user in user_followers %}
+                            <a href="{% url 'user:follow' author.pk %}">팔로우 취소</a>
+                        {% else %}
+                            <a href="{% url 'user:follow' author.pk %}">팔로우하기</a>
+                        {% endif %}
+                    {% endif %}
                 {% endif %}
             </ul>
             <li class="list-group-item" style="text-align: left">
                 <ul class="info_list">
                     <li class="info-profile">
-                    {% if user.profilePic %}
-                        <img class="profilePic" src={{user.profilePic.url}} alt='image'> {{user.username}}
+                    {% if author.profilePic %}
+                        <img class="profilePic" src={{author.profilePic.url}} alt='image'> {{author.username}}
                     {% else %}
-                        <img class="profilePic" src= "{%static 'profile.jpg'%}" alt='image'></a> {{user.username}}
+                        <img class="profilePic" src= "{%static 'profile.jpg'%}" alt='image'></a> {{author.username}}
                     {% endif %}<br>   
                     </li>
                     <li class="info">
@@ -116,9 +118,9 @@
                         </div>
                     </li>
                     <li class="info">
-                        팔로잉 <br><a href="javascript:doDisplay('following_list')">{{ user.followings.count }}</a><br>
+                        팔로잉 <br><a href="javascript:doDisplay('following_list')">{{ author.followings.count }}</a><br>
                         <div id="following_list">
-                            {% for following in user.followings.all %}
+                            {% for following in author.followings.all %}
                             <a href="{% url 'user:profile' following.pk %}">{{following}}</a><br>
                         {% endfor %}
                         </div>
@@ -127,10 +129,10 @@
                 </ul>
             </li>
         </ul>
-        {% if user.introduce %}
-            <span class="introduce">{{user.introduce}}</span><br>
+        {% if author.introduce %}
+            <span class="introduce">{{author.introduce}}</span><br>
         {% else %}
-            <span class="introduce">{{user.username}}</span><br>
+            <span class="introduce">{{author.username}}</span><br>
         {% endif %}
         <hr><br><br>
         <h4>작성한 글 목록</h4>
@@ -147,7 +149,7 @@
         아직 작성한 글이 없습니다
         {% endfor %}
     <br><br><br>
-    {% if request.user == user %}
+    {% if request.user == author %}
         <a href="{% url 'user:update' %}">회원정보 수정</a>&nbsp;&nbsp;
         <a href="{% url 'user:delete' %}">회원 탈퇴</a>
     {% endif %}

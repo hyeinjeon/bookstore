@@ -3,6 +3,7 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import AuthenticationForm 
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from .forms import RegisterForm 
 from .forms import CustomUserChangeForm
 from django.contrib import messages
@@ -40,11 +41,11 @@ def register_view(request):
 
 def profile_view(request, pk):
     User = get_user_model()
-    user = get_object_or_404(User, pk=pk)
+    u = get_object_or_404(User, pk=pk)
 
     posts_all = Blog.objects.all()
-    posts = posts_all.filter(user=user)
-    return render(request, 'profile.html', {'posts':posts, 'user':user})
+    posts = posts_all.filter(user=u)
+    return render(request, 'profile.html', {'posts':posts, 'author':u})
 
 def profile_update(request):
     if request.method == 'POST':
@@ -64,6 +65,7 @@ def profile_delete(request):
         return redirect('home')
     return render(request, 'profile_delete.html')
 
+@login_required
 def follow(request, pk):
     User = get_user_model()
     # 팔로우 당하는 사람
