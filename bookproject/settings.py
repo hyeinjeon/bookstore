@@ -144,9 +144,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'crudapp', 'static'),
+    # os.path.join(BASE_DIR, 'crudapp', 'static'),
     os.path.join(BASE_DIR, 'shop', 'static'),
-    os.path.join(BASE_DIR, 'cart', 'static'),
+    # os.path.join(BASE_DIR, 'cart', 'static'),
     os.path.join(BASE_DIR, 'user', 'static'),
 ]
 
