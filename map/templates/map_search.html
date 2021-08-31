@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    div {
+        margin: auto;
+    }
+    .box {
+        width: 80%;
+        margin: auto;
+        background-color: white;
+        padding: 50px 0px;
+        border-radius: 10px;
+        box-shadow: 1px 1px 3px 1px #dadce0;
+    }
+
+    #address, #title {
+        display: none;
+    }
+
+    .search-form {
+        border: 1px lightgray solid;
+        border-radius: 5px;
+        height: 35px;
+    }
+
+    .content {
+        width: 40%;
+        margin: auto;
+        background-color: white;
+        padding: 20px 0px;
+        border-radius: 10px;
+        box-shadow: 1px 1px 3px 1px #dadce0;
+    }
+
+    .iw_inner{
+        padding:10px
+    } 
+    
+    .iw_inner h3 {
+        font-size: 18px;
+        font-weight: bold;
+        padding-bottom: 7px
+    } 
+</style>
+
+<h3> 장소 검색</h3><br>
+  <form action="{% url 'map:api_search' %}" method="GET">
+      <input type="text" name="q" placeholder="장소검색" class="search-form">
+      <input type="submit" value="검색" class="btn btn-outline-success my-2 my-sm-0">
+  </form>
+  <div>
+  {% for item in items %}
+      <ul><br>
+        <div class="content">
+            {{ item.title|safe }} <br>
+            ( {{item.category}} ) <br> 
+            {{ item.telephone }} <br>
+            {{ item.roadAddress }}<br>
+            <input id="address" type="text" value="{{item.roadAddress}}" readonly>
+            <input id="title" type="text" value="{{item.title|safe}}" readonly>
+            <a href="{{item.link}}">{{item.link}}</a>
+        </div>
+      </ul>
+  {% endfor %}
+  </div>
+  <br><br>
+
+<div class="box">
+    <div id="map" style="width:70%;height:500px;"></div>
+    <br>
+</div>
+<script id="code">
+    var u_address = document.getElementById('address').value
+    var u_title = document.getElementById('title').value
+    //function get_pointer (해당주소,대상지도 id,title) {
+    function get_pointer (adress, getid, title) {
+        naver.maps.Service.geocode({
+            address: adress
+        }, function(status, response) {
+            if (status !== naver.maps.Service.Status.OK) {
+                //return alert('Something wrong!');
+                console.log('주소에러');
+            }
+
+            var result = response.result, // 검색 결과의 컨테이너
+                items = result.items; // 검색 결과의 배열
+
+            // do Something
+            var x = eval(items[0].point.x);
+            var y = eval(items[0].point.y);
+
+            var HOME_PATH = window.HOME_PATH || '.';
+
+            var cityhall = new naver.maps.LatLng(y, x),
+                map = new naver.maps.Map('map', {
+                    center: cityhall.destinationPoint(0, 500),
+                    zoom: 10
+                }),
+                marker = new naver.maps.Marker({
+                    map: map,
+                    position: cityhall
+                });
+
+            var contentString = [
+                '<div class="iw_inner">',
+                '   <h3>'+title+'</h3>',
+                '   <p>'+adress+'</p>',
+                '</div>'
+            ].join('');
+
+            var infowindow = new naver.maps.InfoWindow({
+                content: contentString
+            });
+
+            naver.maps.Event.addListener(marker, "click", function(e) {
+                if (infowindow.getMap()) {
+                    infowindow.close();
+                } else {
+                    infowindow.open(map, marker);
+                }
+            });
+
+            infowindow.open(map, marker);
+        });
+    }
+
+    /* 마커중복 사용안됨 */
+    get_pointer(u_address,'map', u_title);
+</script>
+
+
+{% endblock %}

@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'shop.apps.ShopConfig',
     'cart.apps.CartConfig',
     'user.apps.UserConfig',
+    'map.apps.MapConfig',
 
     #imagekit
     'imagekit',
