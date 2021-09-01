@@ -20,6 +20,12 @@ pip install pilkit
 
 pip install django-imagekit
 
+pip install dj-database-url
+
+pip install django-allauth
+
+pip install whitenoise
+
 python manage.py makemigrations
 
 python manage.py migrate

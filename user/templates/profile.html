@@ -3,6 +3,9 @@
 {% load static %}
 
 <style>
+    body {
+        background-color: rgb(233, 231, 231);
+    }
 
     .box {
         width: 50%;
@@ -75,6 +78,7 @@
         margin: 5px 0 0 25px;
     }
 </style>
+
 <script type="text/javascript">
     function doDisplay(clicked_id) {
         var con = document.getElementById(clicked_id)
@@ -104,9 +108,9 @@
                 <ul class="info_list">
                     <li class="info-profile">
                     {% if author.profilePic %}
-                        <img class="profilePic" src={{author.profilePic.url}} alt='image'> {{author.username}}
+                        <img class="profilePic" src={{author.profilePic.url}} alt='image'> &nbsp;&nbsp; {{author.username}}
                     {% else %}
-                        <img class="profilePic" src= "{%static 'profile.jpg'%}" alt='image'></a> {{author.username}}
+                        <img class="profilePic" src= "{%static 'profile.jpg'%}" alt='image'></a> &nbsp;&nbsp; {{author.username}}
                     {% endif %}<br>   
                     </li>
                     <li class="info">
@@ -134,8 +138,9 @@
         {% else %}
             <span class="introduce">{{author.username}}</span><br>
         {% endif %}
-        <hr><br><br>
-        <h4>작성한 글 목록</h4>
+        <hr><br>
+        <h5>작성한 글 목록</h5>
+        <br>
         {% for post in posts %}
         <a href="{% url 'detail' post.id %}">
             <div class="content">
@@ -148,7 +153,7 @@
         {% empty %}
         아직 작성한 글이 없습니다
         {% endfor %}
-    <br><br><br>
+    <br><br>
     {% if request.user == author %}
         <a href="{% url 'user:update' %}">회원정보 수정</a>&nbsp;&nbsp;
         <a href="{% url 'user:delete' %}">회원 탈퇴</a>

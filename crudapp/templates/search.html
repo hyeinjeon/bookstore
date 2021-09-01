@@ -2,6 +2,30 @@
 
 {% block content %}
 
+<style>
+body {
+  background-color: rgb(233, 231, 231);
+}
+.container2 {
+  text-align: left;
+  margin: 10px auto;
+  padding: 20px;
+  border-style: none;
+  border-radius: 10px;
+  border-width: 2px;
+  background-color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  width: 60%;
+  display: inline-block;
+}
+
+.img {
+  float: left;
+  margin: 10px 30px 20px 10px;
+}
+
+</style>
+
 {% if not blogs %}
     <h1>검색 결과가 없습니다</h1>
 {% else %}
@@ -10,7 +34,7 @@
 <div class="container2"> 
     <div class="cards">
       <div class="card-body">
-        <h3>{{ blog.title }}</h3>
+        <h4><b>{{ blog.title }}</b></h4>
         <hr>
         <div class="img">
           {% if blog.images %}
