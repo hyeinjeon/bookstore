@@ -144,7 +144,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-    # os.path.join(BASE_DIR, 'crudapp', 'static'),
+    os.path.join(BASE_DIR, 'crudapp', 'static'),
     os.path.join(BASE_DIR, 'shop', 'static'),
     # os.path.join(BASE_DIR, 'cart', 'static'),
     os.path.join(BASE_DIR, 'user', 'static'),
@@ -164,7 +164,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CART_ID = 'cart_item'
 
 # Heroku 배포
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRETE_ACCESS_KEY')

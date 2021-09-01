@@ -5,6 +5,20 @@
 <style>
     body {
         text-align: center;
+        background-color: rgb(233, 231, 231);
+    }
+
+    .container2 {
+      text-align: left;
+      margin: 10px auto;
+      padding: 40px;
+      border-style: none;
+      border-radius: 25px;
+      border-width: 2px;
+      background-color: white;
+      font-family: Arial, Helvetica, sans-serif;
+      width: 50%;
+      display: inline-block;
     }
 
     #thumbnail {
@@ -26,9 +40,15 @@
     .description {
         text-align: left;
     }
+
+    a {
+        text-decoration: none;
+        color: rgb(90, 180, 90);
+    }
 </style>
 
 {% for item in cart %}
+<div class="container2">
 {% with product=item.product %}
 
 {% if product.image %}
@@ -47,13 +67,13 @@
 <p>소계 : {{ item.total_price|floatformat }}원</p>
 <a id="delete" href="{% url 'cart:product_remove' product.id %}">장바구니에서 삭제</a>
 <br>
-<hr>
+</div>
+
 </div>
 {% endwith %}
 {% endfor %}
 
-<p>총 금액</p>
-<p>{{ cart.get_product_total|floatformat }}원</p>
+<p><b>총 금액 : {{ cart.get_product_total|floatformat }}원</b></p>
 
 <button type="button" class="btn btn-outline-dark">
     <a href='{% url "shop:list" %}'>쇼핑 계속하기</a> 

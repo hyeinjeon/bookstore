@@ -2,6 +2,24 @@
 
 {% block content %}
 <style>
+
+    body {
+        background-color: rgb(233, 231, 231);
+      }
+
+    .container2 {
+        text-align: center;
+        margin: 10px auto;
+        padding: 20px;
+        border-style: none;
+        border-radius: 10px;
+        border-width: 2px;
+        background-color: white;
+        font-family: Arial, Helvetica, sans-serif;
+        width: 60%;
+        display: inline-block;
+      }
+
     .img {
         padding: 10px;
         margin: auto;
@@ -9,12 +27,17 @@
     }
 
     img {
-        width: 300px;
+        width: 200px;
     }
+
+    a {
+        text-decoration: none;
+        color: rgb(90, 180, 90);
+      }
 </style>
 
-<div class="">
-    <h1>{{ blog.title }}</h1>
+<div class="container2">
+    <h3><b>{{ blog.title }}</b></h3>
     <hr>
     <div class="img">
         {% if blog.images %}
@@ -27,7 +50,8 @@
         <p>조회수 : {{ blog.hits }}</p>
         <a href="{% url 'home' %}">돌아가기</a>
         <br>
-        {% if user == blog.writer %}
+        {% if user == blog.user %}
+        <br>
         <!-- user와 작성자의 이름이 같을 경우 삭제할 수 있게 -->
         <a href="{% url 'edit' blog.id %}">수정하기</a>
         <a href="{% url 'delete' blog.id %}">삭제하기</a>
